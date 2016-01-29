@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>viewmodel作用域</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<script type="text/javascript" src="../js/avalon.js"></script>
+	<script type="text/javascript">
+		avalon.ready(function(){
+			avalon.define({
+				$id:"header",
+				src:"../common/header.html"
+			});
+			avalon.define({
+				$id:"footer",
+				prevDisable:true,
+				nextDisable:false,
+				prevUrl:"javascript:void(0);",
+				nextUrl:"02普通属性的设置.html",
+				src:"../common/footer.html"
+			});
+			avalon.define({
+				$id:"test",
+				name:"aaa",
+				text:"111"
+			});
+			avalon.define({
+				$id:"test2",
+				name:"bbb"
+			});
+			avalon.define({
+				$id:"test3",
+				name:"ccc"
+			});
+			avalon.define({
+				$id:"test4",
+				name:"ddd"
+			});
+			avalon.define({
+				$id:"test5",
+				name:"eee"
+			});
+			
+			avalon.scan();
+		});
+
+	</script>
+	<style type="text/css">
+		strong{
+			color: red
+		}
+	</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<!--这里引入了header.html 为了不影响其他的，这里单独加入了一个ms-controller-->
+		<div ms-include-src="src" ms-controller="header"></div>
+		<div class="col-md-8 col-md-offset-2" ms-controller="test">
+			<h3>一、ViewModel 作用域指令ms-controller、ms-important、ms-skip</h3>
+			<p><strong>controller:</strong> {{name}} -- {{text}}</p>
+			<div ms-controller="test2">
+				<p><strong>controller>controller:</strong> {{name}} -- {{text}} controller会继承上层的属性</p>
+				<div ms-controller="test3">
+					<p><strong>controller>controller>controller:</strong> {{name}} -- {{text}} 如果上层没有的话，继续向上寻找</p>
+				</div>
+			</div>
+			<div ms-important="test4">
+				<p><strong>controller>important:</strong> {{name}} -- {{text}} important无法继承上层属性</p>
+			</div>
+			<div ms-skip="test5">
+				<p><strong>controller>skip:</strong> {{name}} -- {{text}} skip表示不使用ViewModel属性，所有绑定属性都会失效</p>
+			</div>
+		</div>
+		<!--引入模板footer.html引入上一页下一页的链接-->
+		<div ms-include-src="src" ms-controller="footer"></div>
+	</div>
+</body>
+</html>

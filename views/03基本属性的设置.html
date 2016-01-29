@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>普通属性的设置值</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<script type="text/javascript" src="../js/avalon.js"></script>
+	<script type="text/javascript">
+		avalon.ready(function(){
+			avalon.define({
+				$id:"header",
+				src:"../common/header.html"
+			});
+			avalon.define({
+				$id:"footer",
+				prevDisable:false,
+				nextDisable:false,
+				prevUrl:"02普通属性的设置.html",
+				nextUrl:"04遍历数组对象、排序.html",
+				src:"../common/footer.html"
+			});
+			var vm = avalon.define({
+				$id:"test",
+				hobby:["足球"],
+				agree:true,
+				gender:"男",
+				c:"北京",
+				cities:["北京","广州","上海","天津"],
+				a_val:1,
+				a_text:"海淀区",
+				area:[{name:"海淀区",value:1},{name:"东城区",value:2},{name:"西城区",value:3},{name:"朝阳区",value:4}],
+				h:[],
+				hotel:["太子酒店","国贸酒店","皇家酒店"]
+				
+			});
+			avalon.scan();
+		});
+
+	</script>
+	<style>
+		.highlight{
+			border-bottom-left-radius: 4px;
+		    border-bottom-right-radius: 4px;
+		    margin-left: 0;
+		    margin-right: 0;
+		    border: 1px solid #e1e1e8;
+		    background-color: #f7f7f9;
+		    padding: 9px 14px;
+		}
+		._value{
+			color: #c7254e;
+		}
+		._title{
+			color: #1b809e;
+		}
+	</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<!--这里引入了header.html 为了不影响其他的，这里单独加入了一个ms-controller-->
+		<div ms-include-src="src" ms-controller="header"></div>	
+		<div class="col-md-8 col-md-offset-2" ms-controller="test">
+			<h3>三、普通属性的设置值</h3>
+			<div class="highlight row">
+				<p class="_title">复选框的使用实例（元素为checkbox是要求属性为数组）:</p>
+				<input ms-duplex="hobby" value="足球" type="checkbox">足球
+				<input ms-duplex="hobby" value="篮球" type="checkbox">篮球
+				<input ms-duplex="hobby" value="排球" type="checkbox">排球球
+				<input ms-duplex="hobby" value="乒乓球" type="checkbox">乒乓球
+				<input ms-duplex="hobby" value="羽毛球" type="checkbox">羽毛球
+				<p>已选择的项:<label class="_value">{{hobby}}</label></p>
+			</div>
+			<div class="highlight row">
+				<p class="_title">单选框的使用实例（boolean 需要用ms-duplex绑定）:</p>
+				<input ms-duplex="agree" type="radio">同意
+				<p>已选择的项:<label class="_value">{{agree}}</label></p>
+			</div>
+			<div class="highlight row">
+				<p class="_title">单选框的使用实例（string 需要用ms-duplex-string绑定）:</p>
+				<input ms-duplex-string="gender" value="男" type="radio">男
+				<input ms-duplex-string="gender" value="女" type="radio">女
+				<p>已选择的项:<label class="_value">{{gender}}</label></p>
+			</div>
+			<div class="highlight row">
+				<p class="_title">下拉框（单选）的使用实例（仅设置text）:</p>
+				<select ms-duplex="c">
+					<option ms-repeat-city="cities">{{city}}</option>
+				</select>
+				<p>已选择的项:<label class="_value">{{c}}</label></p>
+			</div>
+			<div class="highlight row">
+				<p class="_title">下拉框（单选）的使用实例（设置value和text）:</p>
+				<select ms-duplex="a_val">
+					<option ms-repeat-area="area" ms-attr-value="{{area.value}}">{{area.name}}</option>
+				</select>
+				<p>已选择的项的值:<label class="_value">{{a_val}} </label></p>
+			</div>
+			<div class="highlight row">
+				<p class="_title">下拉框（多选）的使用实例（仅设置text）:</p>
+				<select ms-duplex="h" multiple="multiple">
+					<option ms-repeat="hotel">{{el}}</option>
+				</select>
+				<p>已选择的项:<label class="_value">{{h}} </label></p>
+			</div>
+		</div>
+		<!--引入模板footer.html引入上一页下一页的链接-->
+		<div ms-include-src="src" ms-controller="footer"></div>
+	</div>
+</body>
+</html>
