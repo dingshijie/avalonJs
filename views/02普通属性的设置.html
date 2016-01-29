@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>普通属性的设置值和修改值,数组/Map的遍历列出、删除</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<script type="text/javascript" src="../js/avalon.js"></script>
+	<script type="text/javascript">
+		avalon.ready(function(){
+			avalon.define({
+				$id:"header",
+				src:"../common/header.html"
+			});
+			avalon.define({
+				$id:"footer",
+				prevDisable:false,
+				nextDisable:false,
+				prevUrl:"01viewmodel作用域.html",
+				nextUrl:"03基本属性的设置.html",
+				src:"../common/footer.html"
+			});
+			var vm = avalon.define({
+				$id:"test",
+				name:"tom",
+				array:['足球','篮球','乒乓球','排球'],
+				hobby:"",
+				add:function(e){
+					//添加到数组中
+					if(vm.hobby && e.which == 13){
+						vm.array.push(vm.hobby);
+						vm.hobby = '';
+					}
+				},
+				map:{name:"tom",address:"北京",sex:"男",age:"19"},
+				keys:function(){
+					//设置排序的顺序和显示的key
+					return ["name","sex","age"];
+				}
+			});
+			avalon.scan();
+		});
+
+	</script>
+	<style>
+		.input{
+			width: 100%;
+			background:rgb(237,237,237);
+		}
+		
+	</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<!--这里引入了header.html 为了不影响其他的，这里单独加入了一个ms-controller-->
+		<div ms-include-src="src" ms-controller="header"></div>
+		<div class="col-md-8 col-md-offset-2" ms-controller="test">
+			<h3>二、普通属性的设置值和修改值,数组/Map的遍历列出、删除</h3>
+			<div class="input">
+				<h4>1、普通属性的修改</h4>
+				<p><input class="form-control" ms-duplex="name"></p>
+				<p>{{name}}</p>
+			</div>
+			<div>
+				<h4>2、数组的新增、修改</h4>
+				<p><input class="form-control" ms-duplex="hobby" ms-keypress="add" placeholder="输入内容后按enter添加"></p>
+				<p>数组的记录数{{array.size()}}</p>
+				<ol ms-each="array">
+					<li ms-click="$remove">{{el}} <a href="javascript:void(0);" title="点击删除">×</a> </li>
+				</ol>
+			</div>
+			<div class="input">
+				<h4>3、Map遍历</h4>
+				<ul>
+					<li ms-repeat="map" data-with-sorted="keys">{{$key}} -- {{$val}} </li>
+				</ul>
+			</div>
+		</div>
+		<!--引入模板footer.html引入上一页下一页的链接-->
+		<div ms-include-src="src" ms-controller="footer"></div>
+	</div>
+</body>
+</html>

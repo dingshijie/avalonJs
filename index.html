@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>内容列表</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<script type="text/javascript" src="js/avalon.js"></script>
+	<script type="text/javascript">
+		avalon.define({
+			$id:"test",
+			prefix:"views",
+			item:[{title:"01viewmodel作用域"},{title:"02普通属性的设置"},{title:"03基本属性的设置"},{title:"04遍历数组对象、排序"},{title:"05属性以及类的操作"},{title:"06显示隐藏和移出插入"}],
+			suffix:".html"
+		});
+	</script>
+	<style type="text/css">
+		.divider {
+		  height: 1px;
+		  margin: 9px 0;
+		  overflow: hidden;
+		  background-color: #e5e5e5;
+		}
+	</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="col-md-8 col-md-offset-2" ms-controller="test">
+			<h3>内容列表</h3>
+			<div class="divider"></div>
+			<ol>
+				<li ms-repeat="item"><a ms-attr-href="{{prefix}}/{{el.title}}{{suffix}}" ms-attr-title="'点击查看'"> {{el.title}}</a></li>
+			</ol>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>遍历数组对象、排序</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<script type="text/javascript" src="../js/avalon.js"></script>
+	<script type="text/javascript">
+		avalon.define({
+			$id:"header",
+			src:"../common/header.html"
+		});
+		avalon.define({
+			$id:"footer",
+			prevDisable:false,
+			nextDisable:false,
+			prevUrl:"03基本属性的设置.html",
+			nextUrl:"05属性以及类的操作.html",
+			src:"../common/footer.html"
+		});
+		var model = avalon.define({
+			$id:"test",
+			array:["name","price"],
+			object:[{name:"a足球",price:1000},{name:"b篮球",price:800},{name:"c乒乓球",price:15},{name:"d排球",price:350}],
+			trend:1,
+			selected:"name"
+		});
+		model.$watch("selected",function(v){
+			var t = model.trend;
+			
+			model.object.sort(function(a, b){
+				if(v == "name"){
+					//字符串排序，loacleCompare
+					return t * a[v].localeCompare(b[v]);
+				}else{
+					var ret = a[v] > b[v] ? "1" : -1;
+					return t * ret;
+				}
+			});
+		});
+		model.$watch("trend",function(v){
+			var s = model.selected;
+			model.object.sort(function(a, b){
+				if(s == "name"){
+					return v * a[s].localeCompare(b[s]);
+				}else{
+					var ret = a[s] > b[s] ? "1" : -1;
+					return v * ret;
+				}
+			});
+		});
+
+	</script>
+</head>
+<body>
+	<div class="container-fluid">
+		<!--这里引入了header.html 为了不影响其他的，这里单独加入了一个ms-controller-->
+		<div ms-include-src="src" ms-controller="header"></div>
+		<div class="col-md-8 col-md-offset-2" ms-controller="test">
+			<h3>四、遍历数组对象、排序</h3>
+			<div class="form-inline">
+				<div class="form-group">
+					<select class="form-control" ms-duplex="selected">
+						<option ms-repeat="array">{{el}}</option>
+					</select>
+					</div>
+					<div class="form-group">
+					<select class="form-control" ms-duplex="trend">
+						<option value="1">up</option>
+						<option value="-1">down</option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<table class="table">
+					<tr>
+						<th>name</th>
+						<th>price</th>
+					</tr>
+					<tr ms-repeat="object">
+						<td>{{el.name}}</td>
+						<td>{{el.price | currency}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<!--引入模板footer.html引入上一页下一页的链接-->
+		<div ms-include-src="src" ms-controller="footer"></div>
+	</div>
+</body>
+</html>

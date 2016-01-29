@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>属性和类的操作</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<script type="text/javascript" src="../js/avalon.js"></script>
+	<script type="text/javascript">
+		avalon.define({
+			$id:"header",
+			src:"../common/header.html"
+		});
+		avalon.define({
+			$id:"footer",
+			prevDisable:false,
+			nextDisable:false,
+			prevUrl:"04遍历数组对象、排序.html",
+			nextUrl:"06显示隐藏和移出插入.html",
+			src:"../common/footer.html"
+		});
+		var model = avalon.define({
+			$id:"test",
+			name:"Tom",
+			href:"http://www.baidu.com"
+		});
+
+		var vm = avalon.define({
+			$id:"testClass",
+			color:"蓝",
+			H:"height"
+		});
+	</script>
+	<style type="text/css">
+		.highlight{
+			border-bottom-left-radius: 4px;
+		    border-bottom-right-radius: 4px;
+		    margin-left: 0;
+		    margin-right: 0;
+		    border: 1px solid #e1e1e8;
+		    background-color: #f7f7f9;
+		    padding: 9px 14px;
+		}
+		._value{
+			color: #c7254e;
+		}
+		._title{
+			color: #1b809e;
+		}
+		.notes{
+			font-size:8px; 
+			color: #999;
+		}
+		
+		._height{
+			height: 30px;
+		}
+		._border{
+			border: 1px solid black; 
+		}
+		._red{
+			background-color: red;
+		}
+		._blue{
+			background-color: blue;
+		}
+		._yellow{
+			background-color: yellow;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<!--这里引入了header.html 为了不影响其他的，这里单独加入了一个ms-controller-->
+		<div ms-include-src="src" ms-controller="header"></div>
+		<div class="col-md-8 col-md-offset-2" ms-controller="test">
+			<h3>五、属性和类的操作</h3>
+			<div class="highlight row">
+				<p class="_title">属性的设置ms-attr-*</p>
+				<p>input设置value：<input ms-duplex="name" class="form-control"></p>
+				<p>a标签设置href和title：<a ms-attr-href="{{href}}" ms-attr-title="'百度一下，你就知道'" target="_blank">百度</a>
+				<input ms-duplex="href" class="form-control"></p>
+				<p>input的属性ms-attr-value值为：<label class="_value">{{name}}</label></p>
+				<p>a的属性ms-attr-href值为：<label class="_value">{{href}}</label></p>
+				<span class="notes">注：
+				<ol>
+					<li>从html上可以看到ms-attr-title内容是加了单引号，因为在指令里，如果不加单引号代表引入的是vm定义的属性，加了单引号代表使用该字符串。</li>
+					<li>在这里并没有在VM中定义ms-attr-title的值，这里便不知道如何使用avalon获取title，或许要是有Jquery来操作dom了。</li>
+					<li>新版本已经使用ms-attr-* 代替对应的ms-href、ms-title、ms-value，如果使用旧版本，avalon会提示。</li>
+					<li>如果一个控件同时定义ms-attr-value与ms-duplex，avalon会提示：warning!一个控件不能同时定义ms-attr-value与ms-duplex</li>
+				</ol>
+				</span>
+			</div>
+		</div>
+		<div class="col-md-8 col-md-offset-2" ms-controller="testClass">
+			<div class="highlight row">
+				<p class="_title">类的测试（ms-class）</p>
+				<p>1、ms-class 多个class用空格隔开</p>
+				<div ms-class="_height _border"></div>
+				<p>2、ms-class-* *表示先后顺序</p>
+				<div ms-class-1="_height" ms-class-2="_red" ms-class-3="_blue"></div>
+				<span class="notes">注：ms-class-*会根据*的值从小到大加载类,后加载的style与之前的style若相同，则对其覆盖</span>
+				<p>3、ms-class 用插值表达式以及判断表示</p>
+				<input ms-duplex-string="color" type="radio" value="蓝">蓝
+				<input ms-duplex-string="color" type="radio" value="红">红
+				<input ms-duplex-string="color" type="radio" value="黄">黄
+				<div ms-class="_{{H}} _border" ms-class-1="_red:color=='红'" ms-class-2="_blue:color=='蓝'" ms-class-3="_yellow:color=='黄'"></div>
+				<p>4、ms-active 使用鼠标点击时出现效果</p>
+				<div ms-class="_height _border" ms-active="_red"></div>
+				<p>5、ms-hover 使用鼠标移入时出现效果</p>
+				<div ms-class="_height _border" ms-hover="_red"></div>
+			</div>
+		</div>
+		<!--引入模板footer.html引入上一页下一页的链接-->
+		<div ms-include-src="src" ms-controller="footer"></div>
+	</div>
+</body>
+</html>
