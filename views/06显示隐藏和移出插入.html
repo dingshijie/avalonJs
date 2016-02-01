@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>显示隐藏和移出插入</title>
 	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/common-style.css">
 	<script type="text/javascript" src="../js/avalon.js"></script>
 	<script type="text/javascript">
 		avalon.define({
@@ -26,36 +27,6 @@
 			isRemove:false	
 		});
 	</script>
-	<style type="text/css">
-		.highlight{
-			border-bottom-left-radius: 4px;
-		    border-bottom-right-radius: 4px;
-		    margin-left: 0;
-		    margin-right: 0;
-		    border: 1px solid #e1e1e8;
-		    background-color: #f7f7f9;
-		    padding: 9px 14px;
-		}
-		._value{
-			color: #c7254e;
-		}
-		._title{
-			color: #1b809e;
-		}
-		.notes{
-			font-size:10px; 
-			color: #999;
-		}
-		._heigth{
-			height: 30px;
-		}
-		._border{
-			border: 1px solid black;
-		}
-		._red{
-			background-color: red;
-		}
-	</style>
 </head>
 <body>
 	<div class="container-fluid">
@@ -65,8 +36,8 @@
 			<h3>六、显示隐藏ms-visible和移出插入ms-if的使用</h3>
 			<div class="highlight row">
 				<p class="_title">1、显示隐藏ms-visible </p>
-				<div ms-class="_border _heigth" ms-visible="isVisible">第一个div</div>
-				<div ms-class="_border _heigth" ms-visible="isHidden">第二个div</div>
+				<div ms-class="_border _height" ms-visible="isVisible">第一个div</div>
+				<div ms-class="_border _height" ms-visible="isHidden">第二个div</div>
 				<p class="_value">isVisible={{isVisible}};isHidden={{isHidden}}</p>
 				<span class="notes">
 					注：这里是有两个div，由于isVisible={{isVisible}}，第二个div的ms-visible=false导致第二个div隐藏。第二个div隐藏所使用的方式是avalon设置了style="display:none"。详情打开F12看Elements。
@@ -76,8 +47,8 @@
 			</div>
 			<div class="highlight row">
 				<p class="_title">1、移出插入ms-if </p>
-				<div ms-class="_border _heigth" ms-if="isInsert">第一个div</div>
-				<div ms-class="_border _heigth" ms-if="isRemove">第二个div</div>
+				<div ms-class="_border _height" ms-if="isInsert">第一个div</div>
+				<div ms-class="_border _height" ms-if="isRemove">第二个div</div>
 				<p class="_value">isInsert={{isInsert}};isRemove={{isRemove}}</p>
 				<span class="notes">
 					注：这里是有两个div，定义vm时由于isInsert=true第一个div的ms-if=true使第一个div插入到dom中;isRemove=false第二个div的ms-if=false导致第二个被移出。但，avalon将第二个移出的时候用<!--ms-if-->做了标记，以便插入。详情打开F12看Elements。
