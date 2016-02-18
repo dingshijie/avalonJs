@@ -14,9 +14,9 @@
 		avalon.define({
 			$id:"footer",
 			prevDisable:false,
-			nextDisable:true,
+			nextDisable:false,
 			prevUrl:"06显示隐藏和移出插入.html",
-			nextUrl:"javascript:void(0);",
+			nextUrl:"08ajax提交数据.html",
 			src:"../common/footer.html"
 		});
 		var vm = avalon.define({
@@ -37,7 +37,7 @@
 			<div class="highlight row">
 				<p>模板的引入方式有两种：1、嵌入到页面的模板ms-include，2、独立的页面模板ms-include-src</p>
 				<div class="code">
-					<p>1、嵌入到页面的模板ms-include</p>
+					<p class="_title">1、嵌入到页面的模板ms-include</p>
 					<div class="_border _height" ms-include="template"></div>
 
 <pre><code class="language-html" data-lang="html" ms-skip=""><p>模板代码如下：</p><span class="nt">&lt;script</span> <span class="na">type=</span> <span class="s">"avalon"</span> <span class="na">id=</span> <span class="s">"template"</span><span class="nt">&gt;</span>
@@ -52,7 +52,7 @@
 					</span>
 				</div>
 				<div class="code">
-					<p>2、独立的页面模板通过ms-include-src直接引入</p>
+					<p class="_title">2、独立的页面模板通过ms-include-src直接引入</p>
 <pre><code class="language-html" data-lang="html"><p>引入模板的div如下：</p><span class="nt">&lt;div</span> <span class="na">ms-include-src=</span><span class="s">"src"</span><span class="nt">&gt;&lt;/div&gt;</span></code></pre>
 					<p>
 					<p>
