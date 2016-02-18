@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ajax提交数据</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/common-style.css">
+	<script type="text/javascript" src="../js/avalon.js"></script>
+	<script type="text/javascript" src="../js/jquery-1.12.0.min.js"></script>
+	<script type="text/javascript">
+		avalon.define({
+			$id:"header",
+			src:"../common/header.html"
+		});
+		avalon.define({
+			$id:"footer",
+			prevDisable:false,
+			nextDisable:true,
+			prevUrl:"07模板的引入.html",
+			nextUrl:"javascript:void(0);",
+			src:"../common/footer.html"
+		});
+		var vm = avalon.define({
+			$id:"test",
+			name:"zhangsan",
+			age:20,
+			gender:"男",
+			click:function(){
+				var param= JSON.stringify(vm.$model);
+				//参数已经转换成json形式
+				console.log(param);
+				//使用ajax提交
+				$.ajax({
+					type:"GET",
+					url:"",
+					data:param,
+					dataType:"json",
+					success:function(){
+						
+					},
+					error:function(){
+
+					}
+				});
+			}
+		});
+	</script>
+	
+</head>
+<body>
+	<div class="container-fluid">
+		<!--这里引入了header.html 为了不影响其他的，这里单独加入了一个ms-controller-->
+		<div ms-include-src="src" ms-controller="header"></div>
+		<div class="col-md-8 col-md-offset-2" ms-controller="test">
+			<h3>八、ajax提交数据</h3>
+			<div class="highlight row">
+				<p>form表单</p>
+				<form class="form-horizontal">
+					<div class="form-group">
+					    <label for="name" class="col-sm-2 control-label">Name</label>
+					    <div class="col-sm-10">
+					     	<input class="form-control" ms-duplex="name" >
+					    </div>
+					</div>
+					<div class="form-group">
+					    <label for="age" class="col-sm-2 control-label">Age</label>
+					    <div class="col-sm-10">
+					     	<input class="form-control" ms-duplex="age" >
+					    </div>
+					</div>
+					<div class="form-group">
+					    <label for="gender" class="col-sm-2 control-label">Gender</label>
+						<label class="radio-inline">
+						<input type="radio" ms-duplex-string="gender" value="男" >男
+						</label>
+						<label class="radio-inline">
+						<input type="radio" ms-duplex-string="gender" value="女" >女
+						</label>
+					</div>
+					<div class="form-group">
+					    <div class="col-sm-offset-2 col-sm-10">
+					      <button type="button" class="btn btn-default" ms-click="click">Submit</button>
+					    </div>
+				  </div>
+			    </form>
+			    <div class="code">
+<pre><code class="language-html" data-lang="html"><p>核心代码如下：</p>var param= JSON.stringify(vm.$model);//获取vm中非$开头及非函数的属性
+$.ajax({
+	type:"GET",
+	url:"",//提交的url
+	data:param,
+	dataType:"json",
+	success:function(){
+						
+	},
+	error:function(){
+
+	}
+});</code></pre>
+					<p class="_title">特别的：
+						<ol>
+							<li>$model为VM对象的非$开头的非函数的属性</li>
+							<li>获取方法为VM.$model</li>
+							<li>提交到后台时，需要用JSON.stringify(VM.$model)将属性转换成json形式</li>
+							<li>引入jquery后，用$.ajax、$.get、$.post提交均可</li>
+						</ol>
+					</p>
+			    </div>
+			</div>
+		</div>
+		<!--引入模板footer.html引入上一页下一页的链接-->
+		<div ms-include-src="src" ms-controller="footer"></div>
+	</div>
+</body>
+</html>
