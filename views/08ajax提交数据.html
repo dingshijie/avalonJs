@@ -15,9 +15,9 @@
 		avalon.define({
 			$id:"footer",
 			prevDisable:false,
-			nextDisable:true,
+			nextDisable:false,
 			prevUrl:"07模板的引入.html",
-			nextUrl:"javascript:void(0);",
+			nextUrl:"09计算属性、监控属性、监控数组、非监控属性.html",
 			src:"../common/footer.html"
 		});
 		var vm = avalon.define({
@@ -103,6 +103,7 @@ $.ajax({
 							<li>获取方法为VM.$model</li>
 							<li>提交到后台时，需要用JSON.stringify(VM.$model)将属性转换成json形式</li>
 							<li>引入jquery后，用$.ajax、$.get、$.post提交均可</li>
+							<li>附：提交的详情请打开浏览器控制台查看</li>
 						</ol>
 					</p>
 			    </div>
