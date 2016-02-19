@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>普通属性的设置值和修改值,数组/Map的遍历列出、删除</title>
 	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/common-style.css">
 	<script type="text/javascript" src="../js/avalon.js"></script>
 	<script type="text/javascript">
 		avalon.ready(function(){
@@ -60,9 +61,9 @@
 				<p>{{name}}</p>
 			</div>
 			<div>
-				<h4>2、数组的新增、修改</h4>
+				<h4>2、数组的新增、删除</h4>
 				<p><input class="form-control" ms-duplex="hobby" ms-keypress="add" placeholder="输入内容后按enter添加"></p>
-				<p>数组的记录数{{array.size()}}</p>
+				<p>数组的记录数：<label class="_value">{{array.size()}}</label></p>
 				<ol ms-each="array">
 					<li ms-click="$remove">{{el}} <a href="javascript:void(0);" title="点击删除">×</a> </li>
 				</ol>

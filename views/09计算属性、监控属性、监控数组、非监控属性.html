@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>计算属性、监控属性、监控数组、非监控属性</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/common-style.css">
+	<script type="text/javascript" src="../js/avalon.js"></script>
+	<script type="text/javascript">
+		avalon.define({
+			$id:"header",
+			src:"../common/header.html"
+		});
+		avalon.define({
+			$id:"footer",
+			prevDisable:false,
+			nextDisable:true,
+			prevUrl:"08ajax提交数据.html",
+			nextUrl:"javascript:void(0);",
+			src:"../common/footer.html"
+		});
+		var vm = avalon.define({
+			$id:"test",
+			firstName:"zhang",
+			lastName:"san",
+			$computed:{
+				fullName:{
+					set:function(val){//这里只能用this指向vm，而不能用vm
+						var array = (val||"").split(" ");
+						this.firstName = array[0] || "";
+						this.lastName = array[1] || "";
+					},
+					get:function(){
+						return this.firstName +" "+ this.lastName;//我们默认加上空格
+					}
+				}
+			},
+			$property:"PROP-1",
+			$skipArray:["item"],
+			item:"value-1",
+			click: function(){
+				vm.item = "value-2";
+				vm.$property = "PROP-2";
+				alert("item的值："+vm.item+"\n$property的值："+vm.$property);//输出显示item的值
+			}
+		});
+	</script>
+</head>
+<body>
+	<div class="container-fluid">
+		<!--这里引入了header.html 为了不影响其他的，这里单独加入了一个ms-controller-->
+		<div ms-include-src="src" ms-controller="header"></div>
+		<div class="col-md-8 col-md-offset-2" ms-controller="test">
+			<h3>九、计算属性、监控属性、监控数组、非监控属性</h3>
+			<div class="highlight row">
+				<p class="_title">计算属性</p>
+				<form class="form-horizontal">
+					<div class="form-group">
+					    <label for="firstName" class="col-sm-2 control-label">First Name</label>
+					    <div class="col-sm-10">
+					     	<input class="form-control" ms-duplex="firstName" >
+					    </div>
+					</div>
+					<div class="form-group">
+					    <label for="lastName" class="col-sm-2 control-label">Last Name</label>
+					    <div class="col-sm-10">
+					     	<input class="form-control" ms-duplex="lastName" >
+					    </div>
+					</div>
+					<div class="form-group">
+					    <label for="fullName" class="col-sm-2 control-label">Full Name</label>
+					    <label for="fullName" class="col-sm-10 control-label _value" style="text-align:left">{{firstName +" "+ lastName}}</label>
+					</div>
+					<div class="form-group">
+					    <label for="fullName" class="col-sm-2 control-label">Full Name</label>
+					    <div class="col-sm-10">
+					     	<input class="form-control" ms-duplex="fullName" >
+					    </div>
+					</div>
+			    </form>
+			    <div class="code">
+					<p>特别的：
+						<ol>
+							<li>计算属性要放在$computed中</li>
+							<li>计算属性为一个拥有set（可选）/get方法的对象，它里边的this指向VM,但是不能用avalon.define(id, function(vm){})这里的vm</li>
+						</ol>
+					</p>
+			    </div>
+			</div>
+			<div class="highlight row">
+				<p class="_title">监控属性、监控数组、非监控属性</p>
+				<ol>
+					<li>监控属性：改变属性能够引起视图变化的属性。我们用到的很多都属于监控属性。</li>
+					<li>监控数组：监控数组与普通数组相似，它只是被重写了某一部分方法，如 pop, shift, unshift, push, splice，sort, revert。其次添加了四个移除方法，remove, removeAt, removeAll, clear， 及ensure，pushArray, size，set方法。详见：<a ms-attr-href="'02普通属性的设置.html'">02普通属性的设置--数组的新增和删除</a> 或 <a ms-attr-href="'http://avalonjs.github.io/#tutorial/concepts/collection.html'">监控数组</a></li>
+					<li>非监控属性:即以$开头的属性（如：$id、$watch）、放在$skipArray数组中的属性、值为函数、各种DOM节点的属性，修改他们不会引起视图的变化的属性。</li>
+				</ol>
+				<div class="code">
+					<p>特别的：非监控属性使用</p>
+					<p>item的值：<span class="_value">{{item}}</span></p>
+					<p>$property的值：<span class="_value">{{$property}}</span></p>
+     			    <button type="button" class="btn btn-primary" ms-click="click">修改item</button>
+     			    <span class="notes"><p>注：</p>
+     			    	<ol>
+     			    		<li>可以看到用$开头的属性以及$skipArray数组中的属性值变化的时候不能引起视图的变化</li>
+     			    		<li>放在$skipArray数组中的属性用法如下：
+<pre><code class="language-html" data-lang="html">$skipArray:["item"],
+item:"value-1",</code></pre>
+			</li>
+     			    	</ol>
+     			    </span>
+				</div>
+			</div>
+		</div>
+		<!--引入模板footer.html引入上一页下一页的链接-->
+		<div ms-include-src="src" ms-controller="footer"></div>
+	</div>
+</body>
+</html>
